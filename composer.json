@@ -60,5 +60,10 @@
                 "type:drupal-custom-theme"
             ]
         }
+    },
+    "scripts": {
+        "post-drupal-scaffold-cmd": [
+            "cd docroot && patch -p1 <../patches/htaccess-ssl.patch"
+        ]
     }
 }
