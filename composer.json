@@ -15,11 +15,13 @@
         }
     ],
     "require": {
-        "composer/installers": "^1.9",
+        "composer/installers": "^1",
+        "drush/drush": "^10.3",
+        "drupal/config_installer": "^1.8",
+        "drupal/config_split": "^1.4.0",
         "drupal/core-composer-scaffold": "^9.0",
         "drupal/core-project-message": "^9",
-        "drupal/core-recommended": "^9",
-        "drush/drush": "^10.3"
+        "drupal/devel": "^2.0"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -65,13 +67,12 @@
     "scripts": {
         "post-drupal-scaffold-cmd": [
             "cd docroot && patch -p1 <../patches/htaccess-ssl.patch",
-            "drush generate theme --answers '{\"name\": \"test\"}'",
-            "cd docroot/themes/test && mkdir assets",
-            "cd docroot/themes/test/assets && > main.js",
-            "cd docroot/themes/test/assets && > main.css",
-            "cd docroot && patch -p1 <../patches/theme-assets.patch",
-            "drush generate module --answers '{\"name\": \"test\"}'",
-            "cd docroot && patch -p1 <../patches/custom-block-type.patch",
+            "drush en devel",
+            "drush en config_split",
+            "@run-scripts"
+        ],
+        "run-scripts" : [
+            "./script.sh"
         ]
     }
 }
